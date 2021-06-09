@@ -16,6 +16,12 @@ button {
   font-size: 20px;
 }
 
+h3 {
+  font-size: 4rem;
+  color: green;
+  font-weight: 700;
+}
+
 .buttons {
   display: flex;
   justify-content: space-around;
