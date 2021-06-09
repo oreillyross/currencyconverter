@@ -1,19 +1,27 @@
 import React from "react";
 
-const upper = (str) => str.toUpperCase();
+const limit = (str, length) => str.substring(0, length);
 
 class CurrencyConverter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currSource: "" };
+    this.state = { currSource: "", currDest: "" };
   }
 
   handleChange = (e) => {
-    const value = e.target.value;
-    this.setState({ ...this.state, [e.target.name]: value });
-  };
-  validate = (e) => {
     console.log(e.target.value);
+    const value = e.target.value.toUpperCase();
+    console.log(JSON.stringify(this.state));
+    this.setState({ ...this.state, [e.target.name]: limit(value, 3) });
+  };
+
+  validate = (e) => {
+    const alpha = /[A-Z, a-z]/;
+    const value = e.key;
+    console.log(value);
+    if (!alpha.test(value)) {
+      e.preventDefault();
+    }
   };
 
   render() {
@@ -28,13 +36,15 @@ class CurrencyConverter extends React.Component {
               type="text"
               name="currSource"
               onChange={this.handleChange}
+              onKeyPress={this.validate}
             />
             <label>Destination currency</label>
             <input
               type="text"
+              value={this.state.currDest}
               name="currDest"
-              onKeyDown={this.validate}
               onChange={this.handleChange}
+              onKeyPress={this.validate}
             />
             <label> Currency date</label>
             <input type="date" name="currDate" onChange={this.handleChange} />
