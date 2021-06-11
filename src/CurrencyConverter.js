@@ -1,11 +1,12 @@
 import React from "react";
+import axios from "axios";
 
 const limit = (str, length) => str.substring(0, length);
 
 class CurrencyConverter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currSource: "", currDest: "" };
+    this.state = { rates: {}, base: "" };
   }
 
   handleChange = (e) => {
@@ -24,36 +25,36 @@ class CurrencyConverter extends React.Component {
     }
   };
 
+  submit = (e) => {
+    e.preventDefault();
+    const QUERY_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_EXCHANGERATE_API_KEY}`;
+    console.log(QUERY_URL);
+    axios.get(QUERY_URL).then((res) => {
+      this.setState({ rates: res.data.rates });
+      this.setState({ base: res.data.base });
+    });
+  };
+
   render() {
     return (
       <>
         <h3>Currency Converter</h3>
         <section>
           <form>
-            <label>Source currency</label>
-            <input
-              value={this.state.currSource}
-              type="text"
-              name="currSource"
-              onChange={this.handleChange}
-              onKeyPress={this.validate}
-            />
-            <label>Destination currency</label>
-            <input
-              type="text"
-              value={this.state.currDest}
-              name="currDest"
-              onChange={this.handleChange}
-              onKeyPress={this.validate}
-            />
-            <label> Currency date</label>
-            <input type="date" name="currDate" onChange={this.handleChange} />
-            <section className="buttons">
-              <button>Submit</button>
-              <button>Reset</button>
-            </section>
+            <button onClick={this.submit}> Get Fx Rate</button>
           </form>
-          <div>The Exchange rate is ???</div>
+          <section className="display">
+            <div>The Base rate is {this.state.base}</div>
+            <ul>
+              <div>
+                {Object.entries(this.state.rates).map((rate) => (
+                  <li key={rate[0]}>
+                    {rate[0]} : {rate[1]}
+                  </li>
+                ))}
+              </div>
+            </ul>
+          </section>
         </section>
       </>
     );
