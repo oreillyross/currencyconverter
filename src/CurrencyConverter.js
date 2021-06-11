@@ -1,15 +1,15 @@
 import React from "react";
+import axios from "axios";
 
 const limit = (str, length) => str.substring(0, length);
 
 class CurrencyConverter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currSource: "", currDest: "" };
+    this.state = { currDest: "", rates: {} };
   }
 
   handleChange = (e) => {
-    console.log(e.target.value);
     const value = e.target.value.toUpperCase();
     console.log(JSON.stringify(this.state));
     this.setState({ ...this.state, [e.target.name]: limit(value, 3) });
@@ -18,11 +18,21 @@ class CurrencyConverter extends React.Component {
   validate = (e) => {
     const alpha = /[A-Z, a-z]/;
     const value = e.key;
-    console.log(value);
     if (!alpha.test(value)) {
       e.preventDefault();
     }
   };
+
+  submit = (e) => {
+    e.preventDefault();
+    const { currDest } = this.state;
+    const QUERY_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_EXCHANGERATE_API_KEY}&symbols=${currDest}`;
+    console.log(QUERY_URL);
+    axios.get(QUERY_URL).then((res) => {
+      this.setState({ rates: res.data.rates });
+    });
+  };
+
 
   render() {
     return (
@@ -30,30 +40,15 @@ class CurrencyConverter extends React.Component {
         <h3>Currency Converter</h3>
         <section>
           <form>
-            <label>Source currency</label>
-            <input
-              value={this.state.currSource}
-              type="text"
-              name="currSource"
-              onChange={this.handleChange}
-              onKeyPress={this.validate}
-            />
-            <label>Destination currency</label>
-            <input
-              type="text"
-              value={this.state.currDest}
-              name="currDest"
-              onChange={this.handleChange}
-              onKeyPress={this.validate}
-            />
-            <label> Currency date</label>
-            <input type="date" name="currDate" onChange={this.handleChange} />
-            <section className="buttons">
-              <button>Submit</button>
-              <button>Reset</button>
-            </section>
+            <button onClick={this.submit}></button>
           </form>
-          <div>The Exchange rate is ???</div>
+          <div>
+            {Object.entries(this.state.rates).map((rate) => (
+              <div>
+                {rate[0]} {rate[1]}
+              </div>
+            ))}
+          </div>
         </section>
       </>
     );
