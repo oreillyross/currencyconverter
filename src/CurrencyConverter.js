@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import {Currency} from "./Currency"
 
 const limit = (str, length) => str.substring(0, length);
 
@@ -36,6 +37,7 @@ class CurrencyConverter extends React.Component {
   };
 
   render() {
+    
     return (
       <>
         <h3>Currency Converter</h3>
@@ -46,11 +48,9 @@ class CurrencyConverter extends React.Component {
           <section className="display">
             <div>The Base rate is {this.state.base}</div>
             <ul>
-              <div>
+              <div className="currency-list">
                 {Object.entries(this.state.rates).map((rate) => (
-                  <li key={rate[0]}>
-                    {rate[0]} : {rate[1]}
-                  </li>
+                  <Currency text={`${rate[0]} : ${rate[1]}`}/>
                 ))}
               </div>
             </ul>
