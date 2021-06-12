@@ -26,7 +26,7 @@ class CurrencyConverter extends React.Component {
 
   submit = (e) => {
     e.preventDefault();
-    const QUERY_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_EXCHANGERATE_API_KEY}`;
+    const QUERY_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_API_KEY}`;
     console.log(QUERY_URL);
     axios.get(QUERY_URL).then((res) => {
       this.setState({ rates: res.data.rates });
