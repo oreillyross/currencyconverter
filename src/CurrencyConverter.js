@@ -12,7 +12,6 @@ class CurrencyConverter extends React.Component {
 
   handleChange = (e) => {
     const value = e.target.value.toUpperCase();
-    console.log(JSON.stringify(this.state));
     this.setState({ ...this.state, [e.target.name]: limit(value, 3) });
   };
 
@@ -27,7 +26,6 @@ class CurrencyConverter extends React.Component {
   submit = (e) => {
     e.preventDefault();
     const QUERY_URL = `http://api.exchangeratesapi.io/v1/latest?access_key=${process.env.REACT_APP_API_KEY}`;
-    console.log(QUERY_URL);
     axios.get(QUERY_URL).then((res) => {
       this.setState({ rates: res.data.rates });
       this.setState({ base: res.data.base });
