@@ -1,51 +1,44 @@
-.App {
+html {
+  box-sizing: border-box;
+  background: #333;
+}
+
+body {
   text-align: center;
-}
-
-form input {
-  display: block;
-  width: 90vw;
-  font-size: 26px;
-  padding: 15px;
-}
-
-button {
-  width: 15rem;
-  height: 3rem;
-  margin-top: 2rem;
-  font-size: 20px;
+  height: 100vh;
+  font-family: "Roboto";
 }
 
 h3 {
-  font-size: 4rem;
-  color: green;
-  font-weight: 700;
+  color: cornsilk;
+  font-size: 6rem;
 }
 
-.buttons {
-  display: flex;
-  justify-content: space-around;
-}
-
-
-
-label {
-  display: block;
-  text-align: left;
-  margin-bottom: 12px;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: top;
-  font-size: calc(10px + 2vmin);
+button {
+  background-color: darkslategrey;
   color: white;
+  font-size: 2rem;
+  padding: 1rem;
+  border-radius: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.display {
+  padding-top: 2rem;
+  min-height: 60vh;
+  font-size: 2rem;
+  padding-left: 1.2rem;
+  text-align: left;
+  color: aliceblue;
+}
+.currency-list {
+  background: red;
+  display: flex;
+  flex-wrap: wrap;
+}
+.currency-item {
+  width: 100px;
+  height: 100px;
+  background: grey;
+  border: 1px solid white;
+  padding: 1.2rem;
 }
