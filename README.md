@@ -1,3 +1,5 @@
+# NOTE: This is a WIP - the below branches and code isn't yet written.
+
 # Currency converter project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
